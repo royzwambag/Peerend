@@ -48,8 +48,6 @@ module.exports = (robot) ->
           return false # no match, fail
 
       if filter_parts.length > 0
-        console.log('WHAT?')
-        console.log(announceRepoEvent data, eventType, (what))
         announceRepoEvent data, eventType, (what) ->
           console.log('THIS')
           console.log(Object.keys(what))
