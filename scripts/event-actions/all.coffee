@@ -3,16 +3,14 @@ module.exports =
     msg = {}
     repo = data.repository
     pull_req = data.pull_request
-    pull_req_sender = slackUser data.sender.login
+    pull_req_sender = slackUserInfo data.sender.login[0]
 
     action = data.action
 
     switch action
       when "assigned"
-        pull_req_assignee = slackUser data.assignee.login
+        pull_req_assignee = slackUserInfo data.assignee.login[0]
         user_exists = userExists pull_req_assignee
-        console.log(pull_req_assignee)
-        console.log(user_exists)
         if user_exists
           msg = createMessage(
             repo.full_name,
@@ -22,7 +20,7 @@ module.exports =
             pull_req_assignee
           )
       when "review_requested"
-        pull_req_reviewer = slackUser data.requested_reviewer.login
+        pull_req_reviewer = slackUserInfo data.requested_reviewer.login[1]
         user_exists = userExists pull_req_reviewer
         if data.requested_reviewer.login != data.sender.login && user_exists
           msg = createMessage(
@@ -40,8 +38,8 @@ module.exports =
     repo = data.repository
     review = data.review
     pull_req = data.pull_request
-    pull_req_owner = slackUser pull_req.user.login
-    pull_req_reviewer = slackUser review.user.login
+    pull_req_owner = slackUserInfo pull_req.user.login[1]
+    pull_req_reviewer = slackUserInfo review.user.login[0]
 
     user_exists = userExists pull_req_owner
     if pull_req.user.login != review.user.login && user_exists
@@ -60,8 +58,8 @@ module.exports =
     repo = data.repository
     comment = data.comment
     pull_req = data.pull_request
-    pull_req_owner = slackUser pull_req.user.login
-    pull_req_commenter = slackUser comment.user.login
+    pull_req_owner_id = slackUserInfo pull_req.user.login[1]
+    pull_req_commenter = slackUserInfo comment.user.login[0]
     code_climate = 'codeclimate[bot]'
 
     user_exists = userExists pull_req_owner
@@ -76,14 +74,15 @@ module.exports =
 
     callback msg
 
-slackUser = (username) ->
-  for user in process.env['HUBOT_GITHUB_USERS'].split(',')
+slackUserInfo = (username) ->
+  for user in process.env['HUBOT_GITHUB_USERS_AND_IDS'].split(',')
     do ->
     parts = user.split(":")
     github_user = parts[0]
-    slack_user = parts[1]
+    name = parts[1]
+    id = parts[1]
     if github_user == username
-      return slack_user
+      return name, id
   username
 
 userExists = (username) ->
