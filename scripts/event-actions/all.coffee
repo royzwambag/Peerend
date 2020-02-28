@@ -11,6 +11,8 @@ module.exports =
       when "assigned"
         pull_req_assignee = slackUser data.assignee.login
         user_exists = userExists pull_req_assignee
+        console.log(pull_req_assignee)
+        console.log(user_exists)
         if user_exists
           msg = createMessage(
             repo.full_name,
