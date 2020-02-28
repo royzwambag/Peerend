@@ -33,7 +33,6 @@ module.exports = (robot) ->
           event_part = parts[0]
           action_part = parts[1]
 
-          console.log(eventType)
           if event_part != eventType
             return false # remove anything that isn't this event
 
@@ -47,12 +46,13 @@ module.exports = (robot) ->
             return true # action match
 
           return false # no match, fail
-      console.log(filter_parts)
-      console.log(filter_parts.length)
 
       if filter_parts.length > 0
+        console.log('WHAT?')
+        console.log(announceRepoEvent data, eventType, (what))
         announceRepoEvent data, eventType, (what) ->
-          console.log(Object)
+          console.log('THIS')
+          console.log(Object.keys(what))
           if Object.keys(what).length > 0
             console.log('4')
             sendMessage(robot, what)
@@ -66,10 +66,9 @@ module.exports = (robot) ->
 
 announceRepoEvent = (data, eventType, cb) ->
   if eventActions[eventType]?
-    console.log('------')
-    console.log(data)
-    console.log(eventType)
-    console.log(cb)
+    console.log('THAT')
+    console.log(eventActions[eventType](data, cb))
+
     eventActions[eventType](data, cb)
   else
     console.log "Received a new #{eventType} event, just so you know."
