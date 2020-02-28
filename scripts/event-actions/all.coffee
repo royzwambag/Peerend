@@ -82,11 +82,11 @@ slackUserInfo = (username) ->
     name = parts[1]
     id = parts[1]
     if github_user == username
-      return name, id
-  username
+      return [name, id]
+  [username, null]
 
 userExists = (username) ->
-  process.env['HUBOT_GITHUB_USERS'].indexOf(username) > -1
+  process.env['HUBOT_GITHUB_USERS_AND_IDS'].indexOf(username) > -1
 
 createMessage = (repo, title, link, text, room, color) ->
   default_room = process.env["HUBOT_GITHUB_EVENT_NOTIFIER_ROOM"]
