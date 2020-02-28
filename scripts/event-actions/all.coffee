@@ -11,7 +11,7 @@ module.exports =
       when "assigned"
         pull_req_assignee = slackUserInfo(data.assignee.login)[1]
         user_exists = userExists pull_req_assignee
-        if user_exists
+        if data.requested_reviewer.login != data.sender.login && user_exists
           msg = createMessage(
             repo.full_name,
             pull_req.title,
@@ -22,7 +22,7 @@ module.exports =
       when "review_requested"
         pull_req_reviewer = slackUserInfo(data.requested_reviewer.login)[1]
         user_exists = userExists pull_req_reviewer
-        if data.requested_reviewer.login != data.sender.login && user_exists
+        if user_exists
           msg = createMessage(
             repo.full_name,
             pull_req.title,
