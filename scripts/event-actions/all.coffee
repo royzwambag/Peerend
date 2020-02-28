@@ -3,19 +3,14 @@ module.exports =
     msg = {}
     repo = data.repository
     pull_req = data.pull_request
-    console.log('1')
-    console.log(slackUserInfo(data.sender.login))
-    console.log('2')
-    console.log(slackUserInfo(data.sender.login)[0])
     pull_req_sender = slackUserInfo(data.sender.login)[0]
 
     action = data.action
 
     switch action
       when "assigned"
-        pull_req_assignee = slackUserInfo(data.assignee.login)[0]
+        pull_req_assignee = slackUserInfo(data.assignee.login)[1]
         user_exists = userExists pull_req_assignee
-        console.log(user_exists)
         if user_exists
           msg = createMessage(
             repo.full_name,
@@ -86,7 +81,7 @@ slackUserInfo = (username) ->
     parts = user.split(":")
     github_user = parts[0]
     name = parts[1]
-    id = parts[1]
+    id = parts[2]
     if github_user == username
       return [name, id]
   [username, null]

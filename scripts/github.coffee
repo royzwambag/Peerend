@@ -66,7 +66,5 @@ announceRepoEvent = (data, eventType, cb) ->
 
 sendMessage = (message) ->
   web = new WebClient process.env.HUBOT_SLACK_TOKEN;
-  console.log(web)
-  console.log(message)
   web.chat.postMessage({ channel: message['channel'], attachments: message['attachments'] });
-  console.log(web.chat.postMessage({ channel: message['channel'], attachments: message['attachments'] }))
+
