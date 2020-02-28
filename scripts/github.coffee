@@ -28,15 +28,13 @@ module.exports = (robot) ->
     try
       filter_parts = eventTypes
         .filter (e) ->
-          console.log(e)
           # should always be at least two parts, from eventTypes creation above
           parts = e.split(":")
           event_part = parts[0]
           action_part = parts[1]
 
-          console.log(event_part)
-          console.log(action_part)
-          console.log(evemtTy[e])
+          console.log(eventType)
+          console.log(data)
           if event_part != eventType
             return false # remove anything that isn't this event
 
@@ -50,6 +48,7 @@ module.exports = (robot) ->
             return true # action match
 
           return false # no match, fail
+      console.log(filter_parts)
 
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
