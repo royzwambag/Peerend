@@ -66,7 +66,7 @@ announceRepoEvent = (data, eventType, cb) ->
 sendMessage = (robot, message) ->
   web = new WebClient process.env.HUBOT_SLACK_TOKEN;
   userId = getUserId(message['user'])
-  console.log(userId)
+
   web.chat.postMessage({ channel: userId, attachments: message['attachments'] });
 
 getUserId = (user) ->
@@ -75,6 +75,10 @@ getUserId = (user) ->
     parts = user.split(":")
     github_user = parts[0]
     slack_id = parts[1]
+    console.log('---')
+    console.log(parts)
+    console.log(github_user)
+    console.log(slack_id)
     if github_user == user
       return slack_id
   user
