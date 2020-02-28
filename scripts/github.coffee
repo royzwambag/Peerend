@@ -66,7 +66,8 @@ announceRepoEvent = (data, eventType, cb) ->
 sendMessage = (robot, message) ->
   web = new WebClient process.env.HUBOT_SLACK_TOKEN;
   userId = getUserId(message['user'])
-  web.chat.postMessage({ channel: userId, text: message['text'], attachments: message['attachments'] });
+  console.log(userId)
+  web.chat.postMessage({ channel: userId, attachments: message['attachments'] });
 
 getUserId = (user) ->
   for user in process.env['HUBOT_GITHUB_IDS'].split(',')
