@@ -48,7 +48,7 @@ module.exports = (robot) ->
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
           if Object.keys(what).length > 0
-            sendMessage(robot, what)
+            sendMessage(what)
       else
         console.log "Ignoring #{eventType}:#{data.action} as it's not allowed."
     catch error
@@ -63,6 +63,9 @@ announceRepoEvent = (data, eventType, cb) ->
   else
     console.log "Received a new #{eventType} event, just so you know."
 
-sendMessage = (robot, message) ->
+sendMessage = (message) ->
   web = new WebClient process.env.HUBOT_SLACK_TOKEN;
+  console.log(web)
+  console.log(message)
   web.chat.postMessage({ channel: message['channel'], attachments: message['attachments'] });
+  console.log(web.chat.postMessage({ channel: message['channel'], attachments: message['attachments'] }))
