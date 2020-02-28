@@ -3,6 +3,8 @@ module.exports =
     msg = {}
     repo = data.repository
     pull_req = data.pull_request
+    console.log('1')
+    console.log(slackUserInfo data.sender.login[0])
     pull_req_sender = slackUserInfo data.sender.login[0]
 
     action = data.action
@@ -11,6 +13,7 @@ module.exports =
       when "assigned"
         pull_req_assignee = slackUserInfo data.assignee.login[0]
         user_exists = userExists pull_req_assignee
+        console.log(user_exists)
         if user_exists
           msg = createMessage(
             repo.full_name,
@@ -31,6 +34,7 @@ module.exports =
             pull_req_reviewer
           )
 
+    console.log(msg)
     callback msg
 
   pull_request_review: (data, callback) ->

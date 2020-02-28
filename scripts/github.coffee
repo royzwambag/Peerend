@@ -48,6 +48,7 @@ module.exports = (robot) ->
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
           if Object.keys(what).length > 0
+            console.log('send message')
             sendMessage(what)
       else
         console.log "Ignoring #{eventType}:#{data.action} as it's not allowed."
