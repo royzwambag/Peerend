@@ -1,0 +1,25 @@
+{
+  "name": "Peerend",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Daniel <danieldelnaaij@gmail.com>",
+  "description": "Peerend Botje",
+  "dependencies": {
+    "chrono-node": "^0.1.10",
+    "hubot": "^2.16.0",
+    "hubot-diagnostics": "0.0.1",
+    "hubot-help": "^0.1.2",
+    "hubot-heroku-keepalive": "^1.0.0",
+    "hubot-redis-brain": "0.0.3",
+    "hubot-rules": "^0.1.1",
+    "hubot-scripts": "*",
+    "hubot-slack": "^3.4.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "scraper": "^0.0.9"
+  },
+  "engines": {
+    "node": "13.8.0",
+    "npm": "*"
+  }
+}
