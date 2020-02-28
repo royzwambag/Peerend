@@ -5,7 +5,6 @@
   "author": "Daniel <danieldelnaaij@gmail.com>",
   "description": "Peerend Botje",
   "dependencies": {
-    "@slack/client": "^5.0.2",
     "@slack/web-api": "^5.7.0",
     "chrono-node": "^1.4.3",
     "hubot": "^3.3.2",

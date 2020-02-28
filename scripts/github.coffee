@@ -17,7 +17,7 @@ else
   console.warn("github-repo-event-notifier is not setup to receive any events (HUBOT_GITHUB_EVENT_NOTIFIER_TYPES is empty).")
 
 module.exports = (robot) ->
-  web = new WebClient robot.adapter.options.token
+  web = new WebClient process.env.HUBOT_SLACK_TOKEN;
 
   robot.router.post "/hubot/gh-repo-events", (req, res) ->
     data = req.body
@@ -51,6 +51,7 @@ module.exports = (robot) ->
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
           if Object.keys(what).length > 0
+            console.log('yes')
             sendMessage(robot, what)
       else
         console.log "Ignoring #{eventType}:#{data.action} as it's not allowed."
