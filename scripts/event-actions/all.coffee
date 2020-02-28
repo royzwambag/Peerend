@@ -88,9 +88,9 @@ userExists = (username) ->
   process.env['HUBOT_GITHUB_USERS'].indexOf(username) > -1
 
 createMessage = (repo, title, link, text, room, color) ->
-  default_room = process.env["HUBOT_GITHUB_EVENT_NOTIFIER_ROOM"]
   {
-    channel: room || default_room, 
+    user: room || process.env["HUBOT_GITHUB_EVENT_NOTIFIER_ROOM"],
+    text: text,
     attachments: [{
       "color": color || "#3AA3E3",
       "author_name": repo,

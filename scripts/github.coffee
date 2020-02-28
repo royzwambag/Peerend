@@ -2,6 +2,7 @@ inspect = (require('util')).inspect
 eventActions = require('./event-actions/all')
 eventTypesRaw = process.env['HUBOT_GITHUB_EVENT_NOTIFIER_TYPES']
 eventTypes = []
+{WebClient} = require "@slack/web-api"
 
 if eventTypesRaw?
   eventTypes = eventTypesRaw.split(',').map (e) ->
@@ -16,6 +17,8 @@ else
   console.warn("github-repo-event-notifier is not setup to receive any events (HUBOT_GITHUB_EVENT_NOTIFIER_TYPES is empty).")
 
 module.exports = (robot) ->
+  web = new WebClient robot.adapter.options.token
+
   robot.router.post "/hubot/gh-repo-events", (req, res) ->
     data = req.body
     eventType = req.headers["x-github-event"]
@@ -48,7 +51,7 @@ module.exports = (robot) ->
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
           if Object.keys(what).length > 0
-            robot.adapter.customMessage what
+            sendMessage(robot, what)
       else
         console.log "Ignoring #{eventType}:#{data.action} as it's not allowed."
     catch error
@@ -62,3 +65,20 @@ announceRepoEvent = (data, eventType, cb) ->
     eventActions[eventType](data, cb)
   else
     console.log "Received a new #{eventType} event, just so you know."
+
+sendMessage = (robot, message) ->
+  userId = getUserId(message['user'])
+  
+  web.chat.postMessage({ channel: userId, text: message['text'], attachments: message['attachments'] });
+  
+  robot.send(message)
+
+getUserId = (user) ->
+  for user in process.env['HUBOT_GITHUB_IDS'].split(',')
+    do ->
+    parts = user.split(":")
+    github_user = parts[0]
+    slack_id = parts[1]
+    if github_user == user
+      return slack_id
+  user
