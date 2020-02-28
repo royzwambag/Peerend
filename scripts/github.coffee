@@ -68,10 +68,11 @@ announceRepoEvent = (data, eventType, cb) ->
 
 sendMessage = (robot, message) ->
   userId = getUserId(message['user'])
-  
+  console.log(userId)
+  console.log('posting)')
   web.chat.postMessage({ channel: userId, text: message['text'], attachments: message['attachments'] });
   
-  robot.send(message)
+  console.log(web.chat.postMessage({ channel: userId, text: message['text'], attachments: message['attachments'] });)
 
 getUserId = (user) ->
   for user in process.env['HUBOT_GITHUB_IDS'].split(',')
