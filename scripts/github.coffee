@@ -49,8 +49,6 @@ module.exports = (robot) ->
 
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
-          console.log('THIS')
-          console.log(Object.keys(what))
           if Object.keys(what).length > 0
             console.log('4')
             sendMessage(robot, what)
@@ -64,8 +62,7 @@ module.exports = (robot) ->
 
 announceRepoEvent = (data, eventType, cb) ->
   if eventActions[eventType]?
-    console.log('THAT')
-    console.log(eventActions[eventType](data, cb))
+    console.log(cb)
 
     eventActions[eventType](data, cb)
   else
@@ -73,11 +70,7 @@ announceRepoEvent = (data, eventType, cb) ->
 
 sendMessage = (robot, message) ->
   userId = getUserId(message['user'])
-  console.log(userId)
-  console.log('posting)')
   web.chat.postMessage({ channel: userId, text: message['text'], attachments: message['attachments'] });
-  
-  console.log(web.chat.postMessage({ channel: userId, text: message['text'], attachments: message['attachments'] });)
 
 getUserId = (user) ->
   for user in process.env['HUBOT_GITHUB_IDS'].split(',')

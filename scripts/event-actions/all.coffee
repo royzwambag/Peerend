@@ -31,6 +31,7 @@ module.exports =
             pull_req_reviewer
           )
   
+    console.log(msg)
     callback msg
 
   pull_request_review: (data, callback) ->
