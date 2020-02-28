@@ -69,7 +69,7 @@ sendMessage = (robot, message) ->
   console.log(userId)
   web.chat.postMessage({ channel: userId, attachments: message['attachments'] });
 
-getUserId = (user) ->
+getUserId = (username) ->
   for user in process.env['HUBOT_GITHUB_IDS'].split(',')
     do ->
     parts = user.split(":")
@@ -79,7 +79,7 @@ getUserId = (user) ->
     console.log('user: ' + user)
     console.log('github_user: ' + github_user)
     console.log('slack_id: ' + slack_id)
-    if github_user == user
+    if github_user == username
       console.log('return')
       return slack_id
   user
