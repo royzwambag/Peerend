@@ -62,8 +62,6 @@ module.exports = (robot) ->
 
 announceRepoEvent = (data, eventType, cb) ->
   if eventActions[eventType]?
-    console.log(cb)
-
     eventActions[eventType](data, cb)
   else
     console.log "Received a new #{eventType} event, just so you know."
