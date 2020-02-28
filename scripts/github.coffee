@@ -17,16 +17,20 @@ else
   console.warn("github-repo-event-notifier is not setup to receive any events (HUBOT_GITHUB_EVENT_NOTIFIER_TYPES is empty).")
 
 module.exports = (robot) ->
+  console.log('1')
+
   web = new WebClient process.env.HUBOT_SLACK_TOKEN;
+  console.log('2')
 
   robot.router.post "/hubot/gh-repo-events", (req, res) ->
+    console.log('3')
     data = req.body
     eventType = req.headers["x-github-event"]
     robot.logger.debug "github-repo-event-notifier: Received POST to /hubot/gh-repo-events with data = #{inspect data}"
     robot.logger.debug "github-repo-event-notifier: Processing event type: \"#{eventType}\"..."
 
     try
-
+      console.log('5')
       filter_parts = eventTypes
         .filter (e) ->
           # should always be at least two parts, from eventTypes creation above
@@ -51,7 +55,7 @@ module.exports = (robot) ->
       if filter_parts.length > 0
         announceRepoEvent data, eventType, (what) ->
           if Object.keys(what).length > 0
-            console.log('yes')
+            console.log('4')
             sendMessage(robot, what)
       else
         console.log "Ignoring #{eventType}:#{data.action} as it's not allowed."
