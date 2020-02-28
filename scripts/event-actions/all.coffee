@@ -4,14 +4,16 @@ module.exports =
     repo = data.repository
     pull_req = data.pull_request
     console.log('1')
-    console.log(slackUserInfo data.sender.login[0])
-    pull_req_sender = slackUserInfo data.sender.login[0]
+    console.log(slackUserInfo(data.sender.login))
+    console.log('2')
+    console.log(slackUserInfo(data.sender.login)[0])
+    pull_req_sender = slackUserInfo(data.sender.login)[0]
 
     action = data.action
 
     switch action
       when "assigned"
-        pull_req_assignee = slackUserInfo data.assignee.login[0]
+        pull_req_assignee = slackUserInfo(data.assignee.login)[0]
         user_exists = userExists pull_req_assignee
         console.log(user_exists)
         if user_exists
@@ -23,7 +25,7 @@ module.exports =
             pull_req_assignee
           )
       when "review_requested"
-        pull_req_reviewer = slackUserInfo data.requested_reviewer.login[1]
+        pull_req_reviewer = slackUserInfo(data.requested_reviewer.login)[1]
         user_exists = userExists pull_req_reviewer
         if data.requested_reviewer.login != data.sender.login && user_exists
           msg = createMessage(
@@ -42,8 +44,8 @@ module.exports =
     repo = data.repository
     review = data.review
     pull_req = data.pull_request
-    pull_req_owner = slackUserInfo pull_req.user.login[1]
-    pull_req_reviewer = slackUserInfo review.user.login[0]
+    pull_req_owner = slackUserInfo(pull_req.user.login)[1]
+    pull_req_reviewer = slackUserInfo(review.user.login)[0]
 
     user_exists = userExists pull_req_owner
     if pull_req.user.login != review.user.login && user_exists
@@ -62,8 +64,8 @@ module.exports =
     repo = data.repository
     comment = data.comment
     pull_req = data.pull_request
-    pull_req_owner_id = slackUserInfo pull_req.user.login[1]
-    pull_req_commenter = slackUserInfo comment.user.login[0]
+    pull_req_owner_id = slackUserInfo(pull_req.user.login)[1]
+    pull_req_commenter = slackUserInfo(comment.user.login)[0]
     code_climate = 'codeclimate[bot]'
 
     user_exists = userExists pull_req_owner
